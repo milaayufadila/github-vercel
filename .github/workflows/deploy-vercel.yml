@@ -25,12 +25,9 @@ jobs:
       - name: Deploy Project Artifacts to Vercel
         id: deploy
         run: |
-         OUTPUT=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }} --yes)
-         echo "$OUTPUT"
-
-         # ambil URL alias (yang TANPA random)
-         CLEAN_URL=$(echo "$OUTPUT" | grep -o 'https://github-vercel-five.vercel.app')
-         echo "url=$CLEAN_URL" >> $GITHUB_OUTPUT
+        DEPLOY_URL=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }} --yes | tail -n 1)
+        echo "DEPLOY_URL=$DEPLOY_URL"
+        echo "url=$DEPLOY_URL" >> $GITHUB_OUTPUT
 
       - name: Debug URL
         run: echo "${{ steps.deploy.outputs.url }}"
