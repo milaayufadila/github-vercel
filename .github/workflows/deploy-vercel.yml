@@ -24,9 +24,12 @@ jobs:
 
       - name: Deploy Project Artifacts to Vercel
         id: deploy
-        run: |
-         url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
-         echo "url=$url" >> $GITHUB_OUTPUT
+        run:url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }} --confirm)
+        echo "url=$url"
+        echo "url=$url" >> $GITHUB_OUTPUT
+
+        - name: Debug URL
+        run: echo "${{ steps.deploy.outputs.url }}"
 
       - name: Check deployment result
         run: curl -I https://github-vercel-five.vercel.app/
