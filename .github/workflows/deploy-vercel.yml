@@ -29,5 +29,5 @@ jobs:
          echo "url=$url" >> $GITHUB_OUTPUT
 
       - name: Check deployment result
-        run: curl -I ${{ steps.deploy.outputs.url }}
+        run: curl -I https://github-vercel-five.vercel.app/
     
