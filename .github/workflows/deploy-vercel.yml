@@ -25,8 +25,11 @@ jobs:
       - name: Deploy Project Artifacts to Vercel
         id: deploy
         run: |
-         DEPLOY_URL=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }} --confirm)
-         CLEAN_URL=$(echo "$DEPLOY_URL" | tail -n 1)
+         OUTPUT=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }} --yes)
+         echo "$OUTPUT"
+
+         # ambil URL alias (yang TANPA random)
+         CLEAN_URL=$(echo "$OUTPUT" | grep -o 'https://github-vercel-five.vercel.app')
          echo "url=$CLEAN_URL" >> $GITHUB_OUTPUT
 
       - name: Debug URL
